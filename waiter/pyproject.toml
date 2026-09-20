@@ -1,0 +1,14 @@
+[project]
+name = "waiter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "devtools>=0.12.2",
+    "openapi-client",
+    "pydantic>=2.13.5",
+]
+
+[tool.uv.sources]
+openapi-client = { path = "generated" }
