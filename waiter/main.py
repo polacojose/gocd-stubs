@@ -2,8 +2,7 @@ import os
 from time import sleep
 
 from devtools import pprint
-from gocd import ApiClient, Configuration, JobsApi, JobState
-from gocd.models.job_item import JobItem
+from gocd import ApiClient, Configuration, JobItem, JobsApi, JobState
 
 
 def main():

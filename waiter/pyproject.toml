@@ -10,5 +10,8 @@ dependencies = [
     "pydantic>=2.13.5",
 ]
 
+[tool.ty.environment]
+extra-paths = ["generated"]
+
 [tool.uv.sources]
 gocd = { path = "generated", editable = true }
