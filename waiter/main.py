@@ -1,15 +1,25 @@
-import os
 from time import sleep
 
 from devtools import pprint
 from gocd import ApiClient, Configuration, JobItem, JobsApi, JobState
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
+    host: str | None = None
+    access_token: str | None = None
+
+
+settings = Settings()
 
 
 def main():
 
     configuration = Configuration(
-        host=os.getenv("HOST"),
-        access_token=os.getenv("ACCESS_TOKEN"),
+        host=settings.host,
+        access_token=settings.access_token,
     )
     with ApiClient(configuration) as api_client:
         api_instance = JobsApi(api_client)

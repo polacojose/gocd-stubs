@@ -8,6 +8,7 @@ dependencies = [
     "devtools>=0.12.2",
     "gocd",
     "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
 ]
 
 [tool.ty.environment]
