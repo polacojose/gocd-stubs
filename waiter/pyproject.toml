@@ -6,9 +6,9 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "devtools>=0.12.2",
-    "openapi-client",
+    "gocd",
     "pydantic>=2.13.5",
 ]
 
 [tool.uv.sources]
-openapi-client = { path = "generated" }
+gocd = { path = "generated", editable = true }

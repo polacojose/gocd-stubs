@@ -2,9 +2,8 @@ import os
 from time import sleep
 
 from devtools import pprint
-from openapi_client import ApiClient, Configuration, JobHistoryResponseItem, JobState
-
-from generated.openapi_client.api.jobs_api import JobsApi
+from gocd import ApiClient, Configuration, JobsApi, JobState
+from gocd.models.job_item import JobItem
 
 
 def main():
@@ -55,14 +54,14 @@ def get_state(
     stage_name,
     job_name,
     accept,
-) -> JobHistoryResponseItem | None:
+) -> JobItem | None:
     try:
         # Pipeline Job History
         api_response = api_instance.pipeline_job_history_go_api_jobs_pipeline_name_stage_name_job_name_history_get(
             pipeline_name, stage_name, job_name, accept=accept
         )
         return api_response.jobs[0]
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(
             f"Exception when calling JobsApi->pipeline_job_history_go_api_jobs_pipeline_name_stage_name_job_name_history_get: {e}\n"
         )
