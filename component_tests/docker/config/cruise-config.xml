@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="139">
+  <server agentAutoRegisterKey="b9579dda-6bec-4cb5-9268-d65d0d4a0924" webhookSecret="672069e2-fa56-4f0b-bff5-7d73f02e772a" serverId="811219a0-e1fb-4688-bc09-092a70ce0c34" tokenGenerationKey="153eaa3e-3cda-4411-9d02-fe11156c2fb6">
+    <security>
+      <authConfigs>
+        <authConfig id="password" pluginId="cd.go.authentication.passwordfile">
+          <property>
+            <key>PasswordFilePath</key>
+            <value>/home/go/password.properties</value>
+          </property>
+        </authConfig>
+      </authConfigs>
+      <admins>
+        <user>admin</user>
+      </admins>
+    </security>
+    <artifacts>
+      <artifactsDir>artifacts</artifactsDir>
+    </artifacts>
+  </server>
+  <elastic>
+    <agentProfiles>
+      <agentProfile id="go_agent" clusterProfileId="k8-cluster-profile">
+        <property>
+          <key>PodSpecType</key>
+          <value>yaml</value>
+        </property>
+        <property>
+          <key>Privileged</key>
+          <value/>
+        </property>
+        <property>
+          <key>MaxCPU</key>
+          <value/>
+        </property>
+        <property>
+          <key>Environment</key>
+          <value/>
+        </property>
+        <property>
+          <key>Image</key>
+          <value/>
+        </property>
+        <property>
+          <key>SpecifiedUsingPodConfiguration</key>
+          <value/>
+        </property>
+        <property>
+          <key>RemoteFile</key>
+          <value/>
+        </property>
+        <property>
+          <key>MaxMemory</key>
+          <value/>
+        </property>
+        <property>
+          <key>RemoteFileType</key>
+          <value>json</value>
+        </property>
+      </agentProfile>
+    </agentProfiles>
+    <clusterProfiles>
+      <clusterProfile id="k8-cluster-profile" pluginId="cd.go.contrib.elasticagent.kubernetes">
+        <property>
+          <key>go_server_url</key>
+          <value>http://gocd-server.gocd:8153/go</value>
+        </property>
+      </clusterProfile>
+    </clusterProfiles>
+  </elastic>
+  <pipelines group="PROD"/>
+  <pipelines group="OPEN_EXERCISE">
+    <pipeline name="Open_Exercise_Server" template="Open_Exercise">
+      <environmentvariables>
+        <variable name="NAME">
+          <value>frontend</value>
+        </variable>
+        <variable name="FOLDER">
+          <value>open_exercise</value>
+        </variable>
+      </environmentvariables>
+      <materials>
+        <git url="git@github.com:polacojose/open_exercise.git"/>
+      </materials>
+    </pipeline>
+  </pipelines>
+  <templates>
+    <pipeline name="Open_Exercise">
+      <stage name="build">
+        <jobs>
+          <job name="build" elasticProfileId="go_agent">
+            <tasks>
+              <exec command="./deploy.sh"/>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </templates>
+</cruise>

@@ -1,0 +1,23 @@
+[project]
+name = "integration-tests"
+version = "0.1.0"
+description = "Integration tests for gocd stubs"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gocd",
+    "pydantic-settings>=2.15.0",
+    "pytest>=9.1.1",
+]
+
+[tool.ty.environment]
+extra-paths = ["generated"]
+
+[tool.uv.sources]
+gocd = { path = "generated" }
+
+[dependency-groups]
+dev = [
+    "testcontainers>=4.15.0",
+]
+
