@@ -4,12 +4,12 @@ from enum import Enum
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, field_validator
 
-from common import Tags, bearer, verify_accept_header_v1
+from common import Tags, authenticate_user, verify_accept_header_v1
 
 router = APIRouter(
     prefix="/go/api/jobs",
     tags=[Tags.Jobs],
-    dependencies=[Depends(bearer), Depends(verify_accept_header_v1)],
+    dependencies=[Depends(authenticate_user), Depends(verify_accept_header_v1)],
 )
 
 
@@ -55,15 +55,15 @@ class JobItem(BaseModel):
         return JobState(st)
 
 
-class JobHistoryResponse(BaseModel):
+class JobHistory(BaseModel):
     jobs: list[JobItem]
 
 
 @router.get("/{pipeline_name}/{stage_name}/{job_name}/history")
 async def pipeline_job_history(
     pipeline_name: str, stage_name: str, job_name: str
-) -> JobHistoryResponse:
-    return JobHistoryResponse()  # ty: ignore[missing-argument]
+) -> JobHistory:
+    return JobHistory()  # ty: ignore[missing-argument]
 
 
 @router.get(
