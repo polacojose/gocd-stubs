@@ -69,23 +69,15 @@
     </clusterProfiles>
   </elastic>
   <pipelines group="PROD"/>
-  <pipelines group="OPEN_EXERCISE">
-    <pipeline name="Open_Exercise_Server" template="Open_Exercise">
-      <environmentvariables>
-        <variable name="NAME">
-          <value>frontend</value>
-        </variable>
-        <variable name="FOLDER">
-          <value>open_exercise</value>
-        </variable>
-      </environmentvariables>
+  <pipelines group="EXAMPLE_GROUP">
+    <pipeline name="Example_Pipeline" template="Example_Template">
       <materials>
-        <git url="git@github.com:polacojose/open_exercise.git" autoUpdate="false"/>
+        <git url="git@github.com:user/repo.git" autoUpdate="false"/>
       </materials>
     </pipeline>
   </pipelines>
   <templates>
-    <pipeline name="Open_Exercise">
+    <pipeline name="Example_Template">
       <stage name="build">
         <jobs>
           <job name="build" elasticProfileId="go_agent">

@@ -20,7 +20,7 @@ def test_get_materials(api_instance: MaterialsApi):
 def test_material_git_notify(api_instance: MaterialsApi):
     message = api_instance.notify_git_materials_go_api_admin_materials_git_notify_post(
         materials_git_notify_request=MaterialsGitNotifyRequest(
-            repository_url="git@github.com:polacojose/open_exercise.git"
+            repository_url="git@github.com:user/repo.git"
         ),
         accept=accept,
         x_go_cd_confirm="true",
