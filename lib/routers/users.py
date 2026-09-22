@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 
-from common import Tags, authenticate_user, verify_accept_header
+from common import ConfirmationMessage, Tags, authenticate_user, verify_accept_header
 
 router = APIRouter(
     prefix="/go/api/users",
@@ -53,5 +53,5 @@ async def patch_user(login_name: str, user_patch: UserPatch) -> User:
 
 
 @router.delete("/{login_name}")
-async def delete_user(login_name: str):
-    pass
+async def delete_user(login_name: str) -> ConfirmationMessage:
+    return ConfirmationMessage()  # ty: ignore[missing-argument]

@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from enum import Enum
 from typing import Annotated
 
@@ -12,6 +13,10 @@ class Tags(str, Enum):
     Materials = "Materials"
     Pipelines = "Pipelines"
     Users = "Users"
+
+
+class ConfirmationMessage(BaseModel):
+    message: str
 
 
 bearer = HTTPBearer()
@@ -50,4 +55,21 @@ def verify_accept_header(
             detail="Header 'Accept: application/vnd.go.cd+json' is required",
         )
     return accept
-    return accept
+
+
+def verify_gocd_confirm_header(
+    confirm: Annotated[
+        str,
+        Header(
+            alias="X-GoCD-Confirm",
+            description="API X-GoCD-Confirm Header: Must be 'true'",
+            json_schema_extra={"X-GoCD-Confirm": "true"},
+        ),
+    ] = "true",
+):
+    if confirm != "true":
+        raise HTTPException(
+            status_code=406,
+            detail="Header 'X-GoCD-Confirm: true' is required",
+        )
+    return confirm

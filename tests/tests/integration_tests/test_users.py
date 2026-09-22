@@ -65,10 +65,15 @@ def test_user_flow(api_instance: UsersApi):
     assert user.enabled == False
 
     # Delete User
-    api_instance.delete_user_go_api_users_login_name_delete(
+    message = api_instance.delete_user_go_api_users_login_name_delete(
         login_name=login_name, accept=accept
     )
 
-    # Confirm deleted
+    assert (
+        message.message
+        == f"User with login name '{login_name}' was deleted successfully!"
+    )
+
     users = api_instance.get_users_go_api_users_get(accept=accept).embedded.users
+    # Confirm deleted
     assert len(users) == 1

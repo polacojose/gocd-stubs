@@ -1,5 +1,5 @@
 import pytest
-from gocd import UserCreate, UserPatch, UsersApi, User
+from gocd import UserCreate, UserPatch, UsersApi
 
 from tests.component_tests.conftest import accept
 

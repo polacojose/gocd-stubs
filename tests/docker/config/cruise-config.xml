@@ -80,7 +80,7 @@
         </variable>
       </environmentvariables>
       <materials>
-        <git url="git@github.com:polacojose/open_exercise.git"/>
+        <git url="git@github.com:polacojose/open_exercise.git" autoUpdate="false"/>
       </materials>
     </pipeline>
   </pipelines>
