@@ -10,6 +10,9 @@ dependencies = [
     "pytest>=9.1.1",
 ]
 
+[tool.ty.src]
+exclude = ["generated"]
+
 [tool.ty.environment]
 extra-paths = ["generated"]
 
@@ -20,4 +23,3 @@ gocd = { path = "generated", editable = true }
 dev = [
     "testcontainers>=4.15.0",
 ]
-
