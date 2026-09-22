@@ -177,7 +177,7 @@ wheels = [
 [[package]]
 name = "gocd"
 version = "1.0.0"
-source = { directory = "generated" }
+source = { editable = "generated" }
 dependencies = [
     { name = "pydantic" },
     { name = "python-dateutil" },
@@ -228,7 +228,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "gocd", directory = "generated" },
+    { name = "gocd", editable = "generated" },
     { name = "pydantic-settings", specifier = ">=2.15.0" },
     { name = "pytest", specifier = ">=9.1.1" },
 ]

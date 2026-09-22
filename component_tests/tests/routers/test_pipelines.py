@@ -1,13 +1,13 @@
-from gocd import CurrentUserApi
+from gocd import PipelinesApi
 
-from tests.routers.conftest import api_client
+from tests.routers.conftest import accept, api_client
 
-api_instance = CurrentUserApi(api_client)
-accept = "application/vnd.go.cd.v1+json"
+api_instance = PipelinesApi(api_client)
 
 
-def test_get_current_user(_gocd_test_container):
-    current_user = api_instance.get_current_user_go_api_current_user_get(accept=accept)
-    assert current_user.login_name == "admin"
-    assert current_user.display_name == "admin"
-    assert current_user.enabled == True
+def test_get_pipeline_status(_gocd_test_container):
+    status = api_instance.pipeline_status_go_api_pipelines_pipeline_name_status_get(
+        pipeline_name="Open_Exercise_Server", accept=accept
+    )
+    assert status.paused == False
+    assert status.locked == False

@@ -1,5 +1,5 @@
 add_generated: openapi
-	uv add ./generated/
+	uv add --editable ./generated/
 
 openapi: clean
 	openapi-generator generate -i ../lib/openapi.json -g python -o generated/ \

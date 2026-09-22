@@ -9,6 +9,7 @@ configuration = Configuration(
     password="admin",
 )
 api_client = ApiClient(configuration)
+accept = "application/vnd.go.cd+json"
 
 
 @pytest.fixture(scope="session")
@@ -18,8 +19,10 @@ def _gocd_test_container():
         DockerContainer(image=str(image), ports=[8153]) as container,
     ):
         configuration.host = f"http://localhost:{container.get_exposed_port(8153)}"
+
         global api_client
         api_client = ApiClient(configuration)
+
         wait_for_logs(container, "GoCD server started successfully.")
 
         yield container
