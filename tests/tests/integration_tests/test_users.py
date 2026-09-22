@@ -9,7 +9,7 @@ def api_instance(gocd_test_container_client):
     yield UsersApi(gocd_test_container_client)
 
 
-def test_user_flow(api_instance):
+def test_user_flow(api_instance: UsersApi):
 
     login_name = "test_user"
     test_email = "test_user@test_email.com"

@@ -1,5 +1,5 @@
 import pytest
-from gocd import UserCreate, UserPatch, UsersApi
+from gocd import UserCreate, UserPatch, UsersApi, User
 
 from tests.component_tests.conftest import accept
 
@@ -9,7 +9,7 @@ def api_instance(gocd_test_container_client):
     yield UsersApi(gocd_test_container_client)
 
 
-def test_get_user(api_instance):
+def test_get_user(api_instance: UsersApi):
     user = api_instance.get_user_go_api_users_login_name_get(
         login_name="admin", accept=accept
     )
@@ -19,7 +19,7 @@ def test_get_user(api_instance):
     assert user.enabled == True
 
 
-def test_get_users(api_instance):
+def test_get_users(api_instance: UsersApi):
     response = api_instance.get_users_go_api_users_get(accept=accept)
 
     for user in response.embedded.users:
@@ -31,7 +31,7 @@ def test_get_users(api_instance):
     assert False
 
 
-def test_create_user(api_instance):
+def test_create_user(api_instance: UsersApi):
     user = api_instance.create_user_go_api_users_post(
         user_create=UserCreate(login_name="NewUser"), accept=accept
     )
@@ -41,7 +41,7 @@ def test_create_user(api_instance):
     assert user.enabled == True
 
 
-def test_patch_user(api_instance):
+def test_patch_user(api_instance: UsersApi):
 
     test_email = "someemail@test.com"
     user = api_instance.patch_user_go_api_users_login_name_patch(
