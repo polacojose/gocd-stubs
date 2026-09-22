@@ -9,6 +9,6 @@ router = APIRouter(
 )
 
 
-@router.post("/svn/notify")
-async def materials_notify(repository_url: str) -> str:
+@router.post("/git/notify")
+async def materials_git_notify(repository_url: str) -> str:
     return "Success"
