@@ -7,7 +7,6 @@ from routers.materials import router as materials_router
 from routers.pipelines import router as pipelines_router
 
 app = FastAPI()
-
 app.include_router(access_tokens_router)
 app.include_router(current_user_router)
 app.include_router(jobs_router)

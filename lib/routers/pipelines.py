@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from common import Tags, authenticate_user, verify_accept_header_v1
+from common import Tags, authenticate_user, verify_accept_header
 
 router = APIRouter(
     prefix="/go/api/pipelines",
     tags=[Tags.Pipelines],
-    dependencies=[Depends(authenticate_user), Depends(verify_accept_header_v1)],
+    dependencies=[Depends(authenticate_user), Depends(verify_accept_header)],
 )
 
 
