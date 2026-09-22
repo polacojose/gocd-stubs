@@ -1,14 +1,15 @@
-from pydantic import BaseModel
 from enum import Enum
 from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBearer
+from pydantic import BaseModel
 
 
 class Tags(str, Enum):
     AccessTokens = "Access Tokens"
     CurrentUser = "Current User"
+    GoCD = "GoCD"
     Jobs = "Jobs"
     Materials = "Materials"
     Pipelines = "Pipelines"
