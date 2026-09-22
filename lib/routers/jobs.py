@@ -29,7 +29,7 @@ class JobStateTransition(BaseModel):
 
     @field_validator("state_change_time")
     def dt_validate(cls, dt) -> datetime:
-        return datetime.fromtimestamp(dt)
+        return datetime.fromtimestamp(dt)  # noqa: DTZ006
 
 
 class JobItem(BaseModel):
@@ -48,7 +48,7 @@ class JobItem(BaseModel):
 
     @field_validator("scheduled_date")
     def dt_validate(cls, dt) -> datetime:
-        return datetime.fromtimestamp(dt)
+        return datetime.fromtimestamp(dt)  # noqa: DTZ006
 
     @field_validator("state")
     def st_validate(cls, st) -> JobState:
@@ -63,6 +63,7 @@ class JobHistory(BaseModel):
 async def pipeline_job_history(
     pipeline_name: str, stage_name: str, job_name: str
 ) -> JobHistory:
+    _ = (pipeline_name, stage_name, job_name)
     return JobHistory()  # ty: ignore[missing-argument]
 
 
@@ -76,4 +77,5 @@ async def pipeline_job(
     stage_counter: int,
     job_name: str,
 ) -> JobItem:
+    _ = (pipeline_name, pipeline_counter, stage_name, stage_counter, job_name)
     return JobItem()  # ty: ignore[missing-argument]

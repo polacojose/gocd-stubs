@@ -39,19 +39,23 @@ async def get_users() -> UsersResponse:
 
 @router.get("/{login_name}")
 async def get_user(login_name: str) -> User:
+    _ = login_name
     return User()  # ty: ignore[missing-argument]
 
 
 @router.post("/")
 async def create_user(user_base: UserCreate) -> User:
+    _ = user_base
     return User()  # ty: ignore[missing-argument]
 
 
 @router.patch("/{login_name}")
 async def patch_user(login_name: str, user_patch: UserPatch) -> User:
+    _ = (login_name, user_patch)
     return User()  # ty: ignore[missing-argument]
 
 
 @router.delete("/{login_name}")
 async def delete_user(login_name: str) -> ConfirmationMessage:
+    _ = login_name
     return ConfirmationMessage()  # ty: ignore[missing-argument]

@@ -20,4 +20,5 @@ class PipelineStatus(BaseModel):
 
 @router.get("/{pipeline_name}/status")
 async def pipeline_status(pipeline_name: str) -> PipelineStatus:
+    _ = pipeline_name
     return PipelineStatus()  # ty: ignore[missing-argument]

@@ -62,4 +62,5 @@ async def get_all_materials() -> MaterialsResponse:
 async def notify_git_materials(
     request: MaterialsGitNotifyRequest,
 ) -> ConfirmationMessage:
+    _ = request
     return ConfirmationMessage()  # ty: ignore[missing-argument]

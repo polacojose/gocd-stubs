@@ -25,8 +25,8 @@ basic = HTTPBasic()
 
 
 async def authenticate_user(
-    basic_auth=Depends(basic),  # Make sure your security schemes have auto_error=False
-    bearer_auth=Depends(bearer),
+    basic_auth=Depends(basic),  # noqa: B008
+    bearer_auth=Depends(bearer),  # noqa: B008
 ):
     """
     Allows either Basic Auth OR Bearer token authentication.
