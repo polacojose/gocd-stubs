@@ -213,7 +213,7 @@ wheels = [
 
 [[package]]
 name = "integration-tests"
-version = "0.1.0"
+version = "25.3.0"
 source = { virtual = "." }
 dependencies = [
     { name = "gocd" },

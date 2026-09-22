@@ -1,11 +1,15 @@
+import pytest
 from gocd import CurrentUserApi
 
-from tests.routers.conftest import accept, api_client
-
-api_instance = CurrentUserApi(api_client)
+from tests.component_tests.conftest import accept
 
 
-def test_get_current_user(_gocd_test_container):
+@pytest.fixture(scope="module")
+def api_instance(gocd_test_container_client):
+    yield CurrentUserApi(gocd_test_container_client)
+
+
+def test_get_current_user(api_instance):
     current_user = api_instance.get_current_user_go_api_current_user_get(accept=accept)
     assert current_user.login_name == "admin"
     assert current_user.display_name == "admin"

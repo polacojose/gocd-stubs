@@ -1,21 +1,13 @@
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
 
 from common import Tags, authenticate_user, verify_accept_header
+from routers.users import User
 
 router = APIRouter(
     prefix="/go/api/current_user",
     tags=[Tags.CurrentUser],
     dependencies=[Depends(authenticate_user), Depends(verify_accept_header)],
 )
-
-
-class User(BaseModel):
-    login_name: str
-    display_name: str
-    enabled: bool
-    email: str | None
-    email_me: bool
 
 
 @router.get("/")

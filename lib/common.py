@@ -11,6 +11,7 @@ class Tags(str, Enum):
     Jobs = "Jobs"
     Materials = "Materials"
     Pipelines = "Pipelines"
+    Users = "Users"
 
 
 bearer = HTTPBearer()
