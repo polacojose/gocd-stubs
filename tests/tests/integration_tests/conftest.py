@@ -1,3 +1,4 @@
+from testcontainers.core.wait_strategies import HttpWaitStrategy
 import pytest
 from gocd import ApiClient, Configuration
 from testcontainers.core.container import DockerContainer
@@ -13,10 +14,11 @@ def gocd_test_container_client():
         DockerImage(
             path="./docker/", tag="gocd-integration_tests-image:v25.3.0"
         ) as image,
-        DockerContainer(image=str(image), ports=[8153]) as container,
+        DockerContainer(image=str(image), ports=[8153]).waiting_for(
+            HttpWaitStrategy(port=8153, path="/go/api/v1/health")
+        ) as container,
     ):
         port = container.get_exposed_port(8153)
-        wait_for_logs(container, "GoCD server started successfully.")
 
         client = ApiClient(
             Configuration(
