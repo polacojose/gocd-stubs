@@ -1,7 +1,7 @@
 import pytest
 from gocd import UserCreate, UserPatch, UsersApi
 
-from tests.integration_tests.conftest import accept
+from tests.component_tests.conftest import accept
 
 
 @pytest.fixture(scope="module")
