@@ -1,6 +1,7 @@
 [project]
 name = "integration-tests"
 version = "25.3.0"
+gocd-version = "25.3.0"
 description = "Integration tests for gocd stubs"
 readme = "README.md"
 requires-python = ">=3.12"

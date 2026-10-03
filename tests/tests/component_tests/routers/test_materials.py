@@ -1,7 +1,7 @@
 import pytest
 from gocd import MaterialsApi, MaterialsGitNotifyRequest
 
-from tests.unit_tests.conftest import accept
+from tests.component_tests.conftest import accept
 
 
 @pytest.fixture(scope="module")

@@ -1,8 +1,9 @@
+from testcontainers.core.wait_strategies import HttpWaitStrategy
 import pytest
 from gocd import ApiClient, Configuration
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.image import DockerImage
-from testcontainers.core.wait_strategies import HttpWaitStrategy
+from testcontainers.core.waiting_utils import wait_for_logs
 
 accept = "application/vnd.go.cd+json"
 
@@ -11,7 +12,7 @@ accept = "application/vnd.go.cd+json"
 def gocd_test_container_client():
     with (
         DockerImage(
-            path="./docker/", tag="gocd-integration_tests-image:v25.3.0"
+            path="./docker/", tag="gocd-component_tests-image:v25.3.0"
         ) as image,
         DockerContainer(image=str(image), ports=[8153]).waiting_for(
             HttpWaitStrategy(port=8153, path="/go/api/v1/health")

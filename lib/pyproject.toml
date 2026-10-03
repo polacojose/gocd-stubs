@@ -1,6 +1,7 @@
 [project]
 name = "GOCD"
 version = "25.3.0"
+gocd-version = "25.3.0"
 description = "GOCD API"
 
 readme = "README.md"
