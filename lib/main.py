@@ -8,7 +8,7 @@ from routers.materials import router as materials_router
 from routers.pipelines import router as pipelines_router
 from routers.users import router as users_router
 
-app = FastAPI(title="GoCD")
+app = FastAPI(title="GoCD", version="25.3.0")
 app.include_router(access_tokens_router)
 app.include_router(current_user_router)
 app.include_router(gocd_router)

@@ -193,6 +193,16 @@ requires-dist = [
     { name = "urllib3", specifier = ">=2.7.0,<3.0.0" },
 ]
 
+[package.metadata.requires-dev]
+dev = [
+    { name = "flake8", specifier = ">=4.0.0" },
+    { name = "mypy", specifier = ">=1.5" },
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pytest-cov", specifier = ">=2.8.1" },
+    { name = "tox", specifier = ">=3.9.0" },
+    { name = "types-python-dateutil", specifier = ">=2.8.19.14" },
+]
+
 [[package]]
 name = "idna"
 version = "3.20"

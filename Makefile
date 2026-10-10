@@ -1,19 +1,29 @@
-GOCD_VERSION=`toml2json lib/pyproject.toml | jq '.project."gocd-version"' | tr -d '"'`
+GOCD_VERSION=`grep -r gocd-version lib/pyproject.toml | awk '{print $$3}' | tr -d '"'`
 
-openapi: clean
-
-	( cd lib && \
-		source .venv/bin/activate && \
-		make openapi)
-
+build/gocdapi.json: lib/openapi.json
 	( cd tests && \
-		source .venv/bin/activate && \
-		make openapi && \
+		make generated && \
+		uv venv && \
+		uv sync && \
+		. .venv/bin/activate && \
 		pytest ./tests/ -v)
 
 	mkdir -p build
+	cp lib/openapi.json build/gocdapi.json
 	cp lib/openapi.json build/gocdapi-$(GOCD_VERSION).json
 
+lib/openapi.json:
+	( cd lib && \
+		uv venv && \
+		uv sync && \
+		. .venv/bin/activate && \
+		make openapi.json)
+
 clean: 
-	rm -Rf build || true
-	rm lib/openapi.json || true
+	( cd tests && \
+		make clean)
+	( cd lib && \
+		make clean)
+	rm -Rf build
+	rm -f lib/openapi.json
+	rm -Rf tests/generated
