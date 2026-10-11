@@ -1,6 +1,12 @@
 from fastapi import APIRouter, Depends
 
-from common import Tags, basic, create_gocd_accept_class, verify_gocd_confirm_header
+from common import (
+    Tags,
+    basic,
+    create_gocd_accept_class,
+    verify_accept_header,
+    verify_gocd_confirm_header,
+)
 from models.access_tokens import AccessToken
 
 router = APIRouter(
@@ -9,6 +15,7 @@ router = APIRouter(
     default_response_class=create_gocd_accept_class(version=1),
     dependencies=[
         Depends(basic),
+        Depends(verify_accept_header(1)),
         Depends(verify_gocd_confirm_header),
     ],
 )

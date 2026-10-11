@@ -4,6 +4,7 @@ from common import (
     Tags,
     authenticate_user,
     create_gocd_accept_class,
+    verify_accept_header,
 )
 from models.pipelines import PipelineStatus
 
@@ -11,7 +12,7 @@ router = APIRouter(
     prefix="/go/api/pipelines",
     tags=[Tags.Pipelines],
     default_response_class=create_gocd_accept_class(version=1),
-    dependencies=[Depends(authenticate_user)],
+    dependencies=[Depends(verify_accept_header(1)), Depends(authenticate_user)],
 )
 
 

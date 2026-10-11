@@ -1,13 +1,18 @@
 from fastapi import APIRouter, Depends
 
-from common import Tags, authenticate_user, create_gocd_accept_class
+from common import (
+    Tags,
+    authenticate_user,
+    create_gocd_accept_class,
+    verify_accept_header,
+)
 from models.jobs import JobHistory, JobItem
 
 router = APIRouter(
     prefix="/go/api/jobs",
     tags=[Tags.Jobs],
     default_response_class=create_gocd_accept_class(version=1),
-    dependencies=[Depends(authenticate_user)],
+    dependencies=[Depends(verify_accept_header(1)), Depends(authenticate_user)],
 )
 
 

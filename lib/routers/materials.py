@@ -5,6 +5,7 @@ from common import (
     Tags,
     authenticate_user,
     create_gocd_accept_class,
+    verify_accept_header,
     verify_gocd_confirm_header,
 )
 from models.materials import MaterialsGitNotifyRequest, MaterialsResponse
@@ -14,6 +15,7 @@ router = APIRouter(
     tags=[Tags.Materials],
     default_response_class=create_gocd_accept_class(version=2),
     dependencies=[
+        Depends(verify_accept_header(2)),
         Depends(authenticate_user),
         Depends(verify_gocd_confirm_header),
     ],

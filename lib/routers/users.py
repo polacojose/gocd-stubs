@@ -5,6 +5,7 @@ from common import (
     Tags,
     authenticate_user,
     create_gocd_accept_class,
+    verify_accept_header,
 )
 from models.users import User, UserCreate, UserPatch, UsersResponse
 
@@ -12,7 +13,7 @@ router = APIRouter(
     prefix="/go/api/users",
     tags=[Tags.Users],
     default_response_class=create_gocd_accept_class(version=3),
-    dependencies=[Depends(authenticate_user)],
+    dependencies=[Depends(verify_accept_header(3)), Depends(authenticate_user)],
 )
 
 

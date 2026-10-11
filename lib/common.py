@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from enum import Enum
 from typing import Annotated
 
@@ -42,6 +43,32 @@ async def authenticate_user(
     return basic_auth or bearer_auth
 
 
+def verify_accept_header(version: int | None = None) -> Callable[[str], str]:
+    if version is not None:
+        expected_media_type = f"application/vnd.go.cd.v{version}+json"
+    else:
+        expected_media_type = "application/vnd.go.cd+json"
+
+    def dependency(
+        accept: Annotated[
+            str,
+            Header(
+                alias="Accept",
+                description="API Accept Header",
+                json_schema_extra={"accept": expected_media_type},
+            ),
+        ] = expected_media_type,
+    ) -> str:
+        if accept != expected_media_type:
+            raise HTTPException(
+                status_code=406,
+                detail=f"Header 'Accept: {expected_media_type}' is required",
+            )
+        return accept
+
+    return dependency
+
+
 def verify_gocd_confirm_header(
     confirm: Annotated[
         str,
@@ -60,7 +87,7 @@ def verify_gocd_confirm_header(
     return confirm
 
 
-def create_gocd_accept_class(version: int | None) -> type[JSONResponse]:
+def create_gocd_accept_class(version: int | None = None) -> type[JSONResponse]:
     class GoCDJSONResponse(JSONResponse):
         pass
 
