@@ -1,35 +1,19 @@
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel, Field
 
-from common import ConfirmationMessage, Tags, authenticate_user, verify_accept_header
+from common import (
+    ConfirmationMessage,
+    Tags,
+    authenticate_user,
+    create_gocd_accept_class,
+)
+from models.users import User, UserCreate, UserPatch, UsersResponse
 
 router = APIRouter(
     prefix="/go/api/users",
     tags=[Tags.Users],
-    dependencies=[Depends(authenticate_user), Depends(verify_accept_header)],
+    default_response_class=create_gocd_accept_class(version=3),
+    dependencies=[Depends(authenticate_user)],
 )
-
-
-class UserPatch(BaseModel):
-    enabled: bool | None = None
-    email: str | None = None
-    email_me: bool | None = None
-
-
-class UserCreate(UserPatch):
-    login_name: str
-
-
-class User(UserCreate):
-    display_name: str
-
-
-class UsersEmbedded(BaseModel):
-    users: list[User]
-
-
-class UsersResponse(BaseModel):
-    embedded: UsersEmbedded = Field(alias="_embedded")
 
 
 @router.get("/")

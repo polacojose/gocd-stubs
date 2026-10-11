@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends
 
-from common import Tags, authenticate_user, verify_accept_header
+from common import Tags, authenticate_user, create_gocd_accept_class
 from routers.users import User
 
 router = APIRouter(
     prefix="/go/api/current_user",
     tags=[Tags.CurrentUser],
-    dependencies=[Depends(authenticate_user), Depends(verify_accept_header)],
+    default_response_class=create_gocd_accept_class(version=1),
+    dependencies=[Depends(authenticate_user)],
 )
 
 

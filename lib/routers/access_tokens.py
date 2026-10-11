@@ -1,25 +1,17 @@
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
 
-from common import Tags, basic, verify_accept_header, verify_gocd_confirm_header
+from common import Tags, basic, create_gocd_accept_class, verify_gocd_confirm_header
+from models.access_tokens import AccessToken
 
 router = APIRouter(
     prefix="/go/api/current_user/access_tokens",
     tags=[Tags.AccessTokens],
+    default_response_class=create_gocd_accept_class(version=1),
     dependencies=[
         Depends(basic),
-        Depends(verify_accept_header),
         Depends(verify_gocd_confirm_header),
     ],
 )
-
-
-class AccessToken(BaseModel):
-    id: int
-    description: str
-    username: str
-    revoked: bool
-    token: str
 
 
 @router.post("/")

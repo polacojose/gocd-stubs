@@ -4,8 +4,6 @@ from testcontainers.core.container import DockerContainer
 from testcontainers.core.image import DockerImage
 from testcontainers.core.wait_strategies import HttpWaitStrategy
 
-accept = "application/vnd.go.cd+json"
-
 
 @pytest.fixture(scope="package")
 def gocd_test_container_client():

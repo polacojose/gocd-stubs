@@ -2,6 +2,7 @@ from enum import Enum
 from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, status
+from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic, HTTPBearer
 from pydantic import BaseModel
 
@@ -10,6 +11,7 @@ class Tags(str, Enum):
     AccessTokens = "Access Tokens"
     CurrentUser = "Current User"
     GoCD = "GoCD"
+    Health = "Health"
     Jobs = "Jobs"
     Materials = "Materials"
     Pipelines = "Pipelines"
@@ -20,8 +22,8 @@ class ConfirmationMessage(BaseModel):
     message: str
 
 
-bearer = HTTPBearer()
-basic = HTTPBasic()
+basic = HTTPBasic(auto_error=False)
+bearer = HTTPBearer(auto_error=False)
 
 
 async def authenticate_user(
@@ -40,24 +42,6 @@ async def authenticate_user(
     return basic_auth or bearer_auth
 
 
-def verify_accept_header(
-    accept: Annotated[
-        str,
-        Header(
-            alias="Accept",
-            description="API Accept Header",
-            json_schema_extra={"accept": "application/vnd.go.cd+json"},
-        ),
-    ] = "application/vnd.go.cd+json",
-):
-    if accept != "application/vnd.go.cd+json":
-        raise HTTPException(
-            status_code=406,
-            detail="Header 'Accept: application/vnd.go.cd+json' is required",
-        )
-    return accept
-
-
 def verify_gocd_confirm_header(
     confirm: Annotated[
         str,
@@ -74,3 +58,15 @@ def verify_gocd_confirm_header(
             detail="Header 'X-GoCD-Confirm: true' is required",
         )
     return confirm
+
+
+def create_gocd_accept_class(version: int | None) -> type[JSONResponse]:
+    class GoCDJSONResponse(JSONResponse):
+        pass
+
+    if version != None:
+        GoCDJSONResponse.media_type = f"application/vnd.go.cd.v{version}+json"
+    else:
+        GoCDJSONResponse.media_type = "application/vnd.go.cd+json"
+
+    return GoCDJSONResponse
